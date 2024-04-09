@@ -74,7 +74,7 @@ public class Main {
                 else System.out.println("WRONG ADMIN PASSWORD!");
             }
             else if(choosen ==2){
-                System.out.println("ENTER SELLER ID: ");
+                System.out.println("ENTER SELLER NAME: ");
                 String sellername = sc.nextLine();
                 Seller thisSeller = adminObj.findSeller(sellername,false);
                 if(thisSeller == null){
