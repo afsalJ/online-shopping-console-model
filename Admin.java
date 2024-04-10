@@ -1,5 +1,4 @@
 package onlineShopping;
-
 import java.util.*;
 class Admin {
     //Instance variables
@@ -7,6 +6,7 @@ class Admin {
     public HashMap<Seller, List<Product>> requests=new HashMap<>(); // used to approve requests!
     public HashMap<String, Customer>customers=new HashMap<>(); 
     public HashMap<String, Seller>sellers=new HashMap<>(); 
+    public HashMap<String, Product>products=new HashMap<>(); 
 
     String adminPass = "amazon321";
     public boolean passCheck(String s){
@@ -23,6 +23,7 @@ class Admin {
         }
         temp.add(p);
         requests.put(s, temp);
+        products.put(p.product_name,p);
         System.out.println("REQUEST PLACED SUCCESSFULLY !\n");
     }
 
@@ -41,13 +42,20 @@ class Admin {
     public void displayRequest(Seller s){
             if(inventory.containsKey(s)){
                 System.out.println("SELLER : "+s.sellerName);
-            List<Product> temp = requests.get(s);
-            int index = 1;
+            List<Product> temp = inventory.get(s);
+            int index = 0;
             for(Product p:temp){
-                System.out.println(index+".\tPRODUCT : "+p.product_name+"\tPRICE : "+p.price+"\tQUANTITY : "+p.quantity);
+                System.out.println(++index+".\tPRODUCT : "+p.product_name+"\tPRICE : "+p.price+"\tQUANTITY : "+p.quantity);
             }
             }
             else System.out.println("YOU HAVE NO APPROVED PRODUCTS!");
+    }
+    public void approveSeller(Seller s){
+        List<Product> temp = new ArrayList<>(requests.get(s));
+        for(Product p:temp){
+            addInventory(s,p);
+        }
+        System.out.println("SELLER APPROVED SUCCESSFULLY!");
     }
     public Seller findSeller(String sell,boolean isRequest){
         if(isRequest){
@@ -151,9 +159,9 @@ class Admin {
             s.addTransaction(cusName,tp,1);
             tmp.addTransaction(tp,1);
             sellers.put(tp.sellerName,s);
-            tmp.removeFromCart(tp.product_name);
         }
         System.out.println("ORDER PLACED SUCCESSFULLY!");
+        tmp.cart.clear();
         customers.put(cusName,tmp);
 
     }

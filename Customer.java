@@ -37,11 +37,14 @@ public Customer(String name ){
     public void viewCart() {
         int total=0;
         System.out.println("YOUR CART");
+        int ct=0;
         for(Product product:cart){
-            System.out.println("PRODUCT NAME : " + product.product_name +"\nPRICE : " + product.price +"\nQUANTITY : " + 1);
-            total+=product.price;
+            System.out.println(++ct+") PRODUCT NAME : " + product.product_name +
+                                                         "\tPRICE : " + product.price +
+                                                         "\tQUANTITY : " + 1);
+                                                         total+=product.price;
         }
-        System.out.println("YOU HAVE "+cart.size()+" ITEMS IN YOUR CART\nTOTAL : "+total+" INR");                                                 
+        System.out.println("YOU HAVE "+cart.size()+" ITEMS IN YOUR CART\tTOTAL : "+total+" INR\n");                                                 
     }
 
     public int getCartPrice(){
@@ -68,7 +71,7 @@ public Customer(String name ){
     public void displayHistory(){
             int cnt=0;
             for(String s:transactionHistory){
-                System.out.println(++cnt+" "+s);
+                System.out.println(++cnt+") "+s);
             }
         }
 }

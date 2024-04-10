@@ -17,7 +17,7 @@ public class Main {
                 if(adminObj.passCheck(pass)){
                     boolean adminFlag = true;
                     while (adminFlag){
-                        System.out.println("\n1.PENDING REQUESTS \n2.APPROVE REQUEST \n3.VIEW INVENTORY \n4.REMOVE SELLER \n5.REMOVE PRODUCT");
+                        System.out.println("\n1.PENDING REQUESTS \n2.APPROVE REQUEST \n3.APPROVE SELLER \n4.VIEW INVENTORY \n5.REMOVE SELLER \n6.REMOVE PRODUCT");
                         int adminChoosen = sc.nextInt();
                         sc.nextLine();
                         if(adminChoosen == 1){
@@ -40,10 +40,19 @@ public class Main {
                             }
                             else System.out.println("SELLER NOT FOUND FOR APPROVAL!");
                         }
-                        else if(adminChoosen == 3){
+                        else if(adminChoosen==3){
+                            System.out.println("ENTER SELLERNAME: ");
+                            String sname = sc.nextLine();
+                            Seller seller = adminObj.findSeller(sname,false);
+                            if(seller != null){
+                                adminObj.approveSeller(seller);
+                            }
+                            else System.out.println("SELLER NOT FOUND!");
+                        }
+                        else if(adminChoosen == 4){
                             adminObj.displayInventory();
                         }
-                        else if(adminChoosen==4){
+                        else if(adminChoosen==5){
                             System.out.println("ENTER SELLERNAME: ");
                             String sname = sc.nextLine();
                             Seller seller = adminObj.findSeller(sname,false);
@@ -52,7 +61,7 @@ public class Main {
                             }
                             else System.out.println("SELLER NOT FOUND!");
                         }
-                        else if(adminChoosen == 5){
+                        else if(adminChoosen == 6){
                             System.out.println("ENTER SELLER NAME: ");
                             String sname = sc.nextLine();
                             System.out.println("ENTER PRODUCT ID: ");
@@ -74,7 +83,7 @@ public class Main {
                 else System.out.println("WRONG ADMIN PASSWORD!");
             }
             else if(choosen ==2){
-                System.out.println("ENTER SELLER NAME: ");
+                System.out.println("ENTER SELLER ID: ");
                 String sellername = sc.nextLine();
                 Seller thisSeller = adminObj.findSeller(sellername,false);
                 if(thisSeller == null){
@@ -128,21 +137,19 @@ public class Main {
                     sc.nextLine();
                     if(cusChoosen ==1){
                         adminObj.displayInventory();
-                        System.out.println("PRESS 0 -> SHOP \n1 -> EXIT");
+                        System.out.println("PRESS 0 TO SHOP \nPRESS 1 TO EXIT");
                         int n= sc.nextInt();
                         sc.nextLine();
                         while(n==0){
-                            System.out.println("ENTER SELLER NAME OF THE PRODUCT: ");
-                            String s = sc.nextLine();
                             System.out.println("ENTER PRODUCT NAME: ");
                             String prd = sc.nextLine();
-                            Product p = adminObj.prdFinder(adminObj.sellers.get(s),prd,false);
+                            Product p = adminObj.products.getOrDefault(prd, null);
                             if(p!=null){
                                 thisCus.addToCart(p);
                             }
                             else System.out.println("THE PRODUCT THAT YOU HAVE ENTERED IS INCORRECT!");
                             
-                            System.out.println("PRESS 0 -> SHOP \n1 -> EXIT");
+                            System.out.println("PRESS 0 TO SHOP \nPRESS 1 TO EXIT");
                             n= sc.nextInt();
                             sc.nextLine();
                         }
